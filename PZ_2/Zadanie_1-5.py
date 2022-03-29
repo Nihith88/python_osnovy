@@ -38,7 +38,7 @@ elif month in [3, 4, 5]:
     print(f"Время года: {times[1]}")
 elif month in [6, 7, 8]:
     print(f"Время года: {times[2]}")
-elif month == [9, 10, 11]:
+elif month in [9, 10, 11]:
     print(f"Время года: {times[3]}")
 else:
     print("Некорректный номер месяца")
