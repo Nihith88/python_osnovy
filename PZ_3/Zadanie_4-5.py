@@ -39,5 +39,3 @@ while True:  # цикл будет выполняться пока не попа
         result += sum(user_list)
         print(f"Результат {result}")
         break
-
-
