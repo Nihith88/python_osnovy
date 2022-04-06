@@ -110,3 +110,20 @@ print(t.color)
 print(t.sqare())
 print(t.get_t_p())
 
+class Player:
+    def player_method(self):
+        print("Parent method from Player")
+
+class Navigator:
+    def navigator_method(self):
+        print("Parent method from Navigator")
+
+class Mobile(Player, Navigator):
+    def mobile_method(self):
+        print("legacy method from Mobile")
+
+mobile = Mobile()
+mobile.player_method()
+mobile.navigator_method()
+mobile.mobile_method()
+
