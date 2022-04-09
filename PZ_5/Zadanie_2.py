@@ -11,4 +11,3 @@ with open('user_2.txt', mode='r', encoding='UTF-8') as usr_file:
 print(f"В файле {usr_file.name} количество строк: {string_count}")
 for i in word_count.keys():
     print(f"Строка {i}: слов - {word_count[i]}")
-
