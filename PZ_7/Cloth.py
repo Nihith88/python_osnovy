@@ -16,8 +16,6 @@
 
 from abc import ABC, abstractmethod
 
-from typing import Any
-
 
 class AbstractClothes(ABC):  # Абстрактный класс для всех предметов одежды
 
@@ -29,7 +27,6 @@ class AbstractClothes(ABC):  # Абстрактный класс для всех
     @property
     @abstractmethod
     def measuring(self):
-        """ Общая размерность одежды """
         pass
 
     @abstractmethod
@@ -40,9 +37,7 @@ class AbstractClothes(ABC):  # Абстрактный класс для всех
 class Clothes(AbstractClothes):
     _clothes = []
 
-    """ Одежда """
-
-    def __init__(self, name: str, measuring: Any):
+    def __init__(self, name, measuring):
         self.name = name
         self._measuring = measuring
         self._tissue_required = None
@@ -53,83 +48,70 @@ class Clothes(AbstractClothes):
         raise NotImplemented
 
     @property
-    def tissue_required(self) -> float:
-        """ Расход ткани """
+    def tissue_required(self):
         if not self._tissue_required:
             self._calc_tissue_required()
 
         return self._tissue_required
 
     @property
-    def measuring(self) -> Any:
-        """ Узнать размер """
+    def measuring(self):
         return self._measuring
 
     @measuring.setter
-    def measuring(self, measuring: Any):
-        """ Установить новый размер пальто """
+    def measuring(self, measuring):
         self._measuring = measuring
         self._tissue_required = None
 
     @property
     def total_tissue_required(self):
-        """ Ткани на всю одежду """
-        return sum([item.tissue_required for item in self._clothes])
+        return f"Всего {sum([item.tissue_required for item in self._clothes])} кв.м для пошива"
 
 
 class Coat(Clothes):
-    """ Пальтишко """
-
+    # класс пальто дочерний от одежды
     def _calc_tissue_required(self):
-        """ посчитать расход ткани для пальто """
+        #  расход ткани для пальто
         self._tissue_required = round(self.measuring / 6.5 + 0.5, 2)
 
     @property
-    def V(self) -> Any:
-        """ Узнать размер пальто """
+    def V(self):
         return self.measuring
 
     @V.setter
-    def V(self, size: Any):
-        """ Установить новый размер пальто """
+    def V(self, size):
         self.measuring = size
 
     def __str__(self):
-        return f"Для пошива пальто {self.measuring} размера " \
-               f"требуется {self.tissue_required} кв. метров ткани"
+        return f"Для пошива пальто {self.measuring} размера требуется {self.tissue_required} кв. м ткани"
 
 
-class Suit(Clothes):
-    """ Костюмчик """
+class Suit(Clothes):  # костюм - дочернй класс от одежды
 
     def _calc_tissue_required(self):
         """ посчитать расход ткани для костюма """
         self._tissue_required = round(2 * self.measuring * 0.01 + 0.3, 2)
 
     @property
-    def H(self) -> Any:
-        """ Узнать размер костюма """
+    def H(self):
         return self.measuring
 
     @H.setter
-    def H(self, height: Any):
-        """ Установить новый размер костюма """
+    def H(self, height):
         self.measuring = height
 
     def __str__(self):
-        return f"Для пошива костюма на рост {self.measuring} см. " \
-               f"требуется {self.tissue_required} кв. метров ткани"
+        return f"Для пошива костюма на рост {self.measuring} см. требуется {self.tissue_required} кв. метров ткани"
 
 
-coat = Coat('Пальто от Шанель', 5)
+coat = Coat('Пальто', 42)
 print(coat)
-coat.V = 48
+suit = Suit('Костюм', 150)
+print(suit)
+print(suit.total_tissue_required)
+
+suit.H = 185  # установка нового размера
+print(suit)
+coat.V = 56  # установка нового размера
 print(coat)
-
-suit = Suit('Костюм от Бордо', 175)
-print(suit)
-suit.H = 175
-print(suit)
-
-print(coat.total_tissue_required)
 print(suit.total_tissue_required)
